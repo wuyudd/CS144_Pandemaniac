@@ -1,7 +1,24 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 import json
+import sys
 
-def readGraph(filename):
-	G = {}
-	with open(filename) as file:
-    	data = json.load(file)
-	return G
+#
+# This program reads in the JSON file.
+#
+
+def read_graph(filename):
+	'''
+	input: filename (type: string)
+	output: data (type: dict)
+	'''
+	data = {}
+	with open(filename, 'r') as file:
+		data = json.load(file)
+	return data
+
+# for test
+if __name__ == "__main__":
+	filename = sys.argv[1]
+	graph_adj = read_graph(filename)
+	print(graph_adj)
