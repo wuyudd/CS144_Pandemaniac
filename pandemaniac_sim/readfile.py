@@ -2,6 +2,6 @@ import json
 
 def readGraph(filename):
 	G = {}
-	with open('testgraph1.json') as file:
+	with open(filename) as file:
     	data = json.load(file)
 	return G
