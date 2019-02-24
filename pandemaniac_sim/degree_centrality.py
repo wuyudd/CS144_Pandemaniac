@@ -1,15 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 import readfile
+import sim
 import heapq
 import sys
+import collections
 #
 # This program implements the node selection via "Degree Centrality".
+# Environment: Python 2.7
 #
 
 '''
 How to run degree_centrality.py:
-	python3 degree_centrality.py filename k
+	python degree_centrality.py filename k
 		filename: file path to test graph .json
 		k: number of nodes of top k in the measurement of degree centrality
 Output:
@@ -26,10 +29,10 @@ def degree_centrality(graph_adj):
 				node_i: string
 	'''
 	num_nodes = len(graph_adj)
-	# print(graph_adj)
+	# print graph_adj
 	degree_info = []
 	for key, value in graph_adj.items():
-		degree_i = len(value) / (num_nodes - 1)
+		degree_i = float(len(value)) / (num_nodes - 1)
 		degree_info.append((degree_i, str(key)))
 	return degree_info
 
@@ -52,6 +55,14 @@ if __name__ == "__main__":
 	k = int(sys.argv[2])
 	graph_adj = readfile.read_graph(filename)
 	degree_info = degree_centrality(graph_adj)
-	# print("degree: ", degree_info)
+	# print "degree: ", degree_info
 	top_k_nodes = select_top_k(degree_info, k)
-	print("top k: ", top_k_nodes)
+	print "top k: ", top_k_nodes
+
+	# for sim test
+	graph = graph_adj
+	nodes = collections.defaultdict(list)
+	nodes["strategy1"] = top_k_nodes
+	# nodes["strategy2"] = top_k_nodes
+	results = sim.run(graph, nodes)
+	print results
