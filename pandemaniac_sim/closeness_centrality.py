@@ -8,6 +8,19 @@ import heapq
 import sys
 import sim
 
+'''
+How to run this program:
+Environment: python 2.7
+Packages: networkx
+Dependencies: readfile.py, writefile.py, sim.py
+
+Run Command: python closeness_centrality.py json_filename num_seeds
+         e.g.:
+            python closeness_centrality.py ./testgraph1.json 10
+
+Output: final.txt (contains (num_seeds * round) lines of nodes)
+'''
+
 def build_graph(G):
     graph = nx.Graph()
     for key in G:
