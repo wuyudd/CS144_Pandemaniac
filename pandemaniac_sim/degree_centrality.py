@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 import readfile
+import writefile
 import sim
 import heapq
 import sys
@@ -58,6 +59,12 @@ if __name__ == "__main__":
 	# print "degree: ", degree_info
 	top_k_nodes = select_top_k(degree_info, k)
 	print "top k: ", top_k_nodes
+
+
+	# write out to "final.txt"
+	out_filename = "final.txt"
+	writefile.write_file(out_filename, top_k_nodes)
+
 
 	# for sim test
 	graph = graph_adj
