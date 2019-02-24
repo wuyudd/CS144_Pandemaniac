@@ -1,7 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
 import networkx as nx
 from readfile import *
-# from writefile import *
+from writefile import *
 import heapq
+import sys
 import sim
 
 def build_graph(G):
@@ -13,6 +17,7 @@ def build_graph(G):
 
 def closeness(graph, n):
     closeness = nx.closeness_centrality(graph)
+    # print closeness
     nlargest_closeness = heapq.nlargest(n, closeness, key=closeness.get)
     return nlargest_closeness
 
@@ -22,18 +27,18 @@ def degree(graph, n):
     return nlargest_degree
 
 if __name__ == "__main__":
-    G = read_graph("testgraph1.json")
+    filename = sys.argv[1]
+    num_seeds = int(sys.argv[2])
+    final_name = "final.txt"
+    G = read_graph(filename)
     graph = build_graph(G)
-    # print graph
-    n = 15 # input
-    close = closeness(graph, n)
-    # writefile(close)
+    close = closeness(graph, num_seeds)
+    write_file(final_name, close)
 
-    # for sim test
-    deg = degree(graph, n)
-    strategy = {}
-    strategy["closeness"] = close
-    strategy["degree"] = deg
-    # print(strategy)
-    result = sim.run(G, strategy)
-    print result
+    # # for sim test
+    # deg = degree(graph, num_seeds)
+    # strategy = {}
+    # strategy["closeness"] = close
+    # strategy["degree"] = deg
+    # result = sim.run(G, strategy)
+    # print result
