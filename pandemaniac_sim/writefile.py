@@ -23,7 +23,10 @@ def write_file(filename, selected_nodes):
 	round = 50 # number of rounds
 	with open(filename, 'w') as file:
 		for i in range(round):
-			for node in selected_nodes:
-				file.write(node + "\n")
+			for j in range(len(selected_nodes)):
+				if (i == round-1) and (j == len(selected_nodes)-1):
+					file.write(selected_nodes[j])
+				else:	
+					file.write(selected_nodes[j] + "\n")
 	return
 

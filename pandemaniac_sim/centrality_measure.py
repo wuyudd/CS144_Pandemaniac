@@ -39,6 +39,12 @@ def degree(graph, n):
     nlargest_degree = heapq.nlargest(n, degree, key=degree.get)
     return nlargest_degree
 
+def betweenness(graph, n):
+    betweenness = nx.betweenness_centrality(graph)
+    nlargest_betweenness = heapq.nlargest(n, betweenness, key=betweenness.get)
+    return nlargest_betweenness
+
+
 if __name__ == "__main__":
     filename = sys.argv[1]
     num_seeds = int(sys.argv[2])
@@ -50,8 +56,10 @@ if __name__ == "__main__":
 
     # # for sim test
     # deg = degree(graph, num_seeds)
+    # between = betweenness(graph, num_seeds)
     # strategy = {}
     # strategy["closeness"] = close
     # strategy["degree"] = deg
+    # strategy["between"] = between
     # result = sim.run(G, strategy)
     # print result
