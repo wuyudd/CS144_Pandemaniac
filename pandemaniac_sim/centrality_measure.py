@@ -65,10 +65,10 @@ def aggregate(graph,n,pool_ratio = 2):
             overlap.append(key)
         else:
             non_overlap.append(key)
-    return overlap, non_overlap
+    return overlap, non_overlap, union
 
 
-def pick(overlap,non_overlap,n,overlap_ratio = 0.5):
+def pick(overlap,non_overlap, union, n, overlap_ratio = 0.5):
     candidates = []
     if len(overlap) <= overlap_ratio*n:
         candidates += overlap
@@ -83,20 +83,23 @@ def pick(overlap,non_overlap,n,overlap_ratio = 0.5):
         candidates += random.sample(union - set(candidates), num_missing)
     return candidates
 
+
 if __name__ == "__main__":
     filename = sys.argv[1]
-    num_seeds = int(sys.argv[2])
-    final_name = sys.argv[3]
+    num_seeds = int(filename.split('.')[1])
+    final_name = "_".join(filename.split('.')) + ".txt"
+    overlap_ratio = float(sys.argv[2])
     G = read_graph(filename)
     graph = build_graph(G)
     # close = closeness(graph, num_seeds)
-    overlap, non_overlap = aggregate(graph, num_seeds, pool_ratio = 2)
-    # print(overlap)
-    # print(non_overlap)
+    overlap, non_overlap, union = aggregate(graph, num_seeds, pool_ratio = 2)
+    # print "ratio = ", overlap_ratio
+    # print overlap
+    # print non_overlap
     rounds = 50
     fid = open(final_name, 'w')
     for i in range(rounds):
-        candidates = pick(overlap,non_overlap,num_seeds,overlap_ratio = 0.5)
+        candidates = pick(overlap,non_overlap,union, num_seeds,overlap_ratio = overlap_ratio)
         for j in range(len(candidates)):
             if (i == rounds-1) and (j == len(candidates)-1):
                 fid.write(candidates[j])
@@ -104,15 +107,15 @@ if __name__ == "__main__":
                 fid.write(candidates[j]+'\n')
     fid.close()
 
-    # for sim test
-    deg = degree(graph, num_seeds)
-    between = betweenness(graph, num_seeds)
-    close = closeness(graph, num_seeds)
-    mix = pick(overlap,non_overlap,num_seeds,overlap_ratio = 0.5)
-    strategy = {}
-    strategy["closeness"] = close
-    strategy["degree"] = deg
-    strategy["between"] = between
-    strategy["mix"] = mix
-    result = sim.run(G, strategy)
-    print result
+    # # for sim test
+    # deg = degree(graph, num_seeds)
+    # between = betweenness(graph, num_seeds)
+    # close = closeness(graph, num_seeds)
+    # mix = pick(overlap,non_overlap,union, num_seeds,overlap_ratio = 0.5)
+    # strategy = {}
+    # strategy["closeness"] = close
+    # strategy["degree"] = deg
+    # strategy["between"] = between
+    # strategy["mix"] = mix
+    # result = sim.run(G, strategy)
+    # print result
