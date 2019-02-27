@@ -16,17 +16,6 @@ import collections
 import numpy as np
 import matplotlib.pyplot as plt
 
-def build_graph(G):
-	'''
-	This function is to construct a graph from the graph_description map.
-	Return: nx graph.
-	'''
-    graph = nx.Graph()
-    for key in G:
-        for node in G[key]:
-            graph.add_edge(node, key)
-    return graph
-
 def largest_subgraph_adj(graph):
 	'''
 	This function is to find the largest connected component subgraph.
@@ -68,17 +57,22 @@ def spetral_clustering(A_emb, nodes_largest_graph, num_clusters, nodes_largest_m
 	# cluster_labels_of_nodes = spt_cluster.labels_
 	nodes_of_clusters = collections.defaultdict(list)
 
-	spt_cluster = cluster.SpectralClustering(n_clusters=num_clusters, affinity='nearest_neighbors')
+	spt_cluster = cluster.SpectralClustering(n_clusters=num_clusters, affinity='nearest_neighbors', n_neighbors=3)
 	cluster_labels_of_nodes = spt_cluster.fit_predict(A_emb) # return labels : ndarray, shape (n_samples,)
-	print "****************** cluster label ******************"
-	print cluster_labels_of_nodes
-	print len(cluster_labels_of_nodes)
+	# print "****************** cluster label ******************"
+	# print cluster_labels_of_nodes
+	# print len(cluster_labels_of_nodes)
 
 	for i in range(len(cluster_labels_of_nodes)):
 		curr_label = cluster_labels_of_nodes[i]
 		curr_node = nodes_largest_invmap[i]
 		nodes_of_clusters[curr_label].append(curr_node) # int?
 
+	print "****************** clusters information ******************"
+	for key, value in nodes_of_clusters.items():
+		#print key, value, "length = ", len(value)
+		print key, "length = ", len(value)
+	print "****************** clusters information end ******************"
  	return nodes_of_clusters
 
 def output_subgraph(nodes_of_clusters, graph):
@@ -92,7 +86,7 @@ def output_subgraph(nodes_of_clusters, graph):
 			max_len = len(value)
 			max_cluster = key
 	max_subgraph = graph.subgraph(nodes_of_clusters[max_cluster])
-	return max_subgraph
+	return max_subgraph, max_len
 
 def plot(nodes_of_clusters, A_emb):
 	'''
@@ -104,7 +98,7 @@ def plot(nodes_of_clusters, A_emb):
 		print cluster
 		new = []
 		for i in nodes_of_clusters[cluster]:
-			new.append(i-1)
+			new.append(int(i)-1)
 		sub_pos = A_emb[new]
 		plt.scatter(sub_pos[:,0],sub_pos[:,1],color = plt.cm.Spectral(cluster / 5.),linewidths = 0.1,alpha=0.1)
 	print "end!"
@@ -115,7 +109,7 @@ if __name__ == "__main__":
 	filename = sys.argv[1]
 	num_clusters = int(sys.argv[2])
 	G = read_graph(filename)
-	graph = build_graph(G)
+	graph = nx.Graph(G)
 
 	# largest connected component: 
 	# adj_largest_mat, nodes_largest_graph = largest_subgraph_adj(graph)
@@ -124,16 +118,19 @@ if __name__ == "__main__":
 	# original graph:
 	adj_largest_mat = nx.adjacency_matrix(graph)
 	nodes_largest_graph = list(graph.nodes())
-	
+	print "adj_largest_mat shape = ", adj_largest_mat.shape
 	# map nodes 
 	nodes_largest_map, nodes_largest_invmap = map_nodes(nodes_largest_graph)
 
 	# 2-D embedding
 	A_d, A_emb = embedding_adj(adj_largest_mat)
+	print "A_d shape = ", A_d.shape
+	print "A_emb shape = ", A_emb.shape
 	
 	# spectral clustering 
 	nodes_of_clusters = spetral_clustering(A_emb, nodes_largest_graph, num_clusters, nodes_largest_map, nodes_largest_invmap)
 	
+	#plot(nodes_of_clusters, graph)
 	for key, value in nodes_of_clusters.items():
 		print "****************** clusters information ******************"
 		print key, value, "length = ", len(value)
@@ -141,14 +138,15 @@ if __name__ == "__main__":
 	# output max_cluster graph
 	max_subgraph = output_subgraph(nodes_of_clusters, graph)
 
-	# draw the original graph and the max_cluster graph
-	plt.figure()
-	nx.draw(graph, pos=nx.random_layout(graph), node_color = 'r', edge_color = 'black', with_labels = True, font_size = 8, node_size = 20)
-	plt.show()
 
-	plt.figure()
-	nx.draw(max_subgraph, pos=nx.random_layout(max_subgraph), node_color = 'g', edge_color = 'black', with_labels = True, font_size =8, node_size=20)
-	plt.show()	
+	# draw the original graph and the max_cluster graph
+	# plt.figure()
+	# nx.draw(graph, pos=nx.random_layout(graph), node_color = 'r', edge_color = 'black', with_labels = True, font_size = 8, node_size = 20)
+	# plt.show()
+
+	# plt.figure()
+	# nx.draw(max_subgraph, pos=nx.random_layout(max_subgraph), node_color = 'g', edge_color = 'black', with_labels = True, font_size =8, node_size=20)
+	# plt.show()	
 
 
 

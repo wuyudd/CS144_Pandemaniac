@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+#
+# Created by Sha Sha, Wen Gu, Yu Wu
+#
+
 import networkx as nx
 from readfile import *
 from writefile import *
@@ -9,6 +13,7 @@ import sys
 import sim
 import random
 import math
+import clustering
 
 '''
 How to run this program:
@@ -22,13 +27,6 @@ Run Command: python closeness_centrality.py json_filename num_seeds
 
 Output: final.txt (contains (num_seeds * round) lines of nodes)
 '''
-
-def build_graph(G):
-    graph = nx.Graph()
-    for key in G:
-        for node in G[key]:
-            graph.add_edge(node, key)
-    return graph
 
 def closeness(graph, n):
     closeness = nx.closeness_centrality(graph)
@@ -83,14 +81,30 @@ def pick(overlap,non_overlap, union, n, overlap_ratio = 0.5):
         candidates += random.sample(union - set(candidates), num_missing)
     return candidates
 
+def get_largest_cluster(graph, num_clusters):
+    adj_largest_mat, nodes_largest_graph = clustering.largest_subgraph_adj(graph)
+    nodes_largest_map, nodes_largest_invmap = clustering.map_nodes(nodes_largest_graph)
+    A_d, A_emb = clustering.embedding_adj(adj_largest_mat)
+    nodes_of_clusters = clustering.spetral_clustering(A_emb, nodes_largest_graph, num_clusters, nodes_largest_map, nodes_largest_invmap)
+    max_subgraph, max_len = clustering.output_subgraph(nodes_of_clusters, graph)
+    return max_subgraph, max_len
 
 if __name__ == "__main__":
     filename = sys.argv[1]
     num_seeds = int(filename.split('.')[1])
-    final_name = "_".join(filename.split('.')) + ".txt"
+    final_name = "_".join(filename.split('.')) +  "_clu.txt"
     overlap_ratio = float(sys.argv[2])
+    num_clusters = int(sys.argv[3])
+    atmost_nodes_num = int(sys.argv[4])
+
     G = read_graph(filename)
-    graph = build_graph(G)
+    graph = nx.Graph(G)
+
+    num_of_cluster_nodes = float('inf')
+
+    while num_of_cluster_nodes >= atmost_nodes_num:
+        graph, max_len = get_largest_cluster(graph, num_clusters)
+        num_of_cluster_nodes = max_len
     # close = closeness(graph, num_seeds)
     overlap, non_overlap, union = aggregate(graph, num_seeds, pool_ratio = 2)
     # print "ratio = ", overlap_ratio

@@ -3,6 +3,7 @@
 import sys
 #
 # This program writes out the .txt file.
+# Created by Wen Gu, Yu Wu
 #
 
 def write_file(filename, selected_nodes):

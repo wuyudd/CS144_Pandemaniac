@@ -5,6 +5,7 @@ import sys
 
 #
 # This program reads in the JSON file.
+# Created by Wen Gu
 #
 
 def read_graph(filename):
