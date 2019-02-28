@@ -15,7 +15,7 @@ def select_strategy(strategy_name, graph, cluster_flag, num_seeds, ratio, num_cl
 	This function is to choose the corresponding strategy and write out to the final file.
 	'''
 	rounds = 50
-	if cluster_flag == 1: # decides whether to get cluster or not
+	if cluster_flag == "1": # decides whether to get cluster or not
 		graph, max_len = max_cluster(graph, num_clusters, atmost_nodes_num)
 		print "final graph size = ", max_len
 	

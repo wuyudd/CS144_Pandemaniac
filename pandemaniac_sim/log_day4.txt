@@ -1,0 +1,64 @@
+2.5.4,   python main.py 2.5.4.json 0 aggr 0.8 2 1000 1.5 (1 cluster?)
+4.5.4,   python main.py 4.5.4.json 1 aggr 0.8 2 1000 1.5 (multiple clusters?)
+	****************** clusters information ******************
+	0 length =  92
+	1 length =  95
+	****************** clusters information end ******************
+	final graph size =  95
+4.10.4,  python main.py 4.10.4.json 0 aggr 0.6 2 1000 1.5 (1 cluster)
+8.10.4,  python main.py 8.10.4.json 0 aggr 0.6 2 1000 1.5 (1 cluster)
+8.20.5,  python main.py 8.20.5.json 1 aggr 0.6 2 1500 1. (1 big cluster + 1 small cluster)
+	****************** clusters information ******************
+	0 length =  1498
+	1 length =  500
+	****************** clusters information end ******************
+	final graph size =  1498
+8.25.2,  python main.py 8.25.2.json 1 aggr 0.6 2 1000 1.5 (1 big cluster(1 big+ 1 small?) + 1 small)
+	****************** clusters information ******************
+	0 length =  832
+	1 length =  4168
+	****************** clusters information end ******************
+	****************** clusters information ******************
+	0 length =  3794
+	1 length =  363
+	****************** clusters information end ******************
+	****************** clusters information ******************
+	0 length =  3049
+	1 length =  743
+	****************** clusters information end ******************
+	****************** clusters information ******************
+	0 length =  1545
+	1 length =  1482
+	****************** clusters information end ******************
+	****************** clusters information ******************
+	0 length =  896
+	1 length =  613
+	****************** clusters information end ******************
+	final graph size =  896
+
+8.40.2,  python main.py 8.40.2.json 1 aggr 0.6 2 1100 1.5
+	****************** clusters information ******************
+	0 length =  4861
+	1 length =  5138
+	****************** clusters information end ******************
+	****************** clusters information ******************
+	0 length =  970
+	1 length =  4091
+	****************** clusters information end ******************
+	****************** clusters information ******************
+	0 length =  3012
+	1 length =  1056
+	****************** clusters information end ******************
+	****************** clusters information ******************
+	0 length =  2330
+	1 length =  660
+	****************** clusters information end ******************
+	****************** clusters information ******************
+	0 length =  986
+	1 length =  1320
+	****************** clusters information end ******************
+	****************** clusters information ******************
+	0 length =  946
+	1 length =  300
+	****************** clusters information end ******************
+	final graph size =  946

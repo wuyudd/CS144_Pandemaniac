@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
+import sys
+from readfile import *
+import networkx as nx
+import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
 	filename = sys.argv[1] # input json filename
