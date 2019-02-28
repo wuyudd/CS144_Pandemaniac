@@ -1,0 +1,15 @@
+2.5.5    python main.py 2.5.5.json 0 aggr 0.8 2 1000 1.5
+4.5.5    python main.py 4.5.5.json 0 aggr 0.8 2 1000 1.5 (find out there are several outlier very small clusters?)
+4.10.5   python main.py 4.10.5.json 0 aggr 0.8 2 1000 1.5
+2.10.14  python main.py 2.10.14.json 0 clo 0.5 2 1000 1
+2.10.24  python main.py 2.10.24.json 0 clo 0.5 2 1000 1
+2.10.34  python main.py 2.10.34.json 0 deg 0.5 2 1000 1.5
+8.10.5   python main.py 8.10.5.json 1 aggr 0.6 2 1000 1.5 (find out there are two~three obvious clusters)
+	****************** clusters information ******************
+	0 length =  659
+	1 length =  341
+	****************** clusters information end ******************
+	final graph size =  659
+8.20.6   python main.py 8.20.6.json 0 deg 0.6 2 1000 1.5 (one big cluster)
+8.20.7   python main.py 8.20.7.json 0 deg 0.6 2 1000 2.0 (one big seemly symmetric cluster)
+8.35.3   python main.py 8.35.3.json 0 deg 0.6 2 1000 2.0 (one big seemly symmetric cluster)
