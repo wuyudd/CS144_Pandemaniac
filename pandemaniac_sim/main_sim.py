@@ -140,22 +140,35 @@ def max_cluster(graph, num_clusters, atmost_nodes_num):
 if __name__ == "__main__":
 	filename = sys.argv[1] # input json filename
 
-	cluster_flag = sys.argv[2] # do clustering or not
+	# cluster_flag = sys.argv[2] # do clustering or not
 
-	num_seeds = int(filename.split('.')[1]) + 2 # number of nodes we can select
+	# num_seeds = int(filename.split('.')[1]) + 2 # number of nodes we can select
 	
-	strategy_name = sys.argv[3] # use which strategy ("deg" / "clo" / "bet" / "aggr")
-	final_name = "_".join(filename.split('.')[:-1]) + "_" + strategy_name + ".txt" # output filename
+	# strategy_name = sys.argv[3] # use which strategy ("deg" / "clo" / "bet" / "aggr")
+	# final_name = "_".join(filename.split('.')[:-1]) + "_" + strategy_name + ".txt" # output filename
 	
-	overlap_ratio = float(sys.argv[4]) # choose what ratio of overlapped (intersected of three centrality) nodes
+	# overlap_ratio = float(sys.argv[4]) # choose what ratio of overlapped (intersected of three centrality) nodes
 	
-	num_clusters = int(sys.argv[5]) # number of clusters from each clustering operation
+	# num_clusters = int(sys.argv[5]) # number of clusters from each clustering operation
 	
-	atmost_nodes_num = int(sys.argv[6]) # at most atmost_nodes_num nodes can be in the final graph
+	# atmost_nodes_num = int(sys.argv[6]) # at most atmost_nodes_num nodes can be in the final graph
 	
-	ratio = float(sys.argv[7])
+	# ratio = float(sys.argv[7])
 
 	G = read_graph(filename)
 	origin_graph = nx.Graph(G) # create the graph object
-	select_strategy(strategy_name, origin_graph, cluster_flag, num_seeds, ratio, num_clusters, atmost_nodes_num, final_name) # get final result
+	#select_strategy(strategy_name, origin_graph, cluster_flag, num_seeds, ratio, num_clusters, atmost_nodes_num, final_name) # get final result
 	
+	# for sim test
+	union_ta = union(origin_graph, 12, 1, 1)
+	union_mine = union(origin_graph, 10, 1, 1)
+	#deg = degree_only(origin_graph, 10, 1.5, 1)
+	#mine = closeness_only(origin_graph, 10, 1.5, 1)
+	strategy = {}
+	strategy["union_ta"] = union_ta
+	strategy["union_mine"] = union_mine
+	#strategy["mine"] = mine
+	#strategy["degree"] = deg
+	result = sim.run(G, strategy)
+	print result
+

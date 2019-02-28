@@ -44,7 +44,7 @@ def betweenness(graph, n):
     nlargest_betweenness = heapq.nlargest(n, betweenness, key=betweenness.get)
     return nlargest_betweenness
 
-def aggregate(graph,n,pool_ratio = 2):
+def aggregate(graph,n,pool_ratio):
     cl = closeness(graph, pool_ratio*n)
     dg = degree(graph, pool_ratio*n)
     bt = betweenness(graph, pool_ratio*n)
@@ -106,7 +106,8 @@ if __name__ == "__main__":
         graph, max_len = get_largest_cluster(graph, num_clusters)
         num_of_cluster_nodes = max_len
     # close = closeness(graph, num_seeds)
-    overlap, non_overlap, union = aggregate(graph, num_seeds, pool_ratio = 2)
+    pool_ratio = 2
+    overlap, non_overlap, union = aggregate(graph, num_seeds, pool_ratio)
     # print "ratio = ", overlap_ratio
     # print overlap
     # print non_overlap
