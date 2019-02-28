@@ -69,10 +69,10 @@ def union(graph, num_seeds, ratio, rounds):
 	dg = degree(graph, int(ratio * num_seeds))
 	bt = betweenness(graph, int(ratio * num_seeds))
 	union_nodes = list(set(cl + dg + bt))
-	print "close: ", cl
-	print "degree: ", dg
-	print "betweenness: ", bt
-	print "union: ", union_nodes, "; len = ", len(union_nodes)
+	# print "close: ", cl
+	# print "degree: ", dg
+	# print "betweenness: ", bt
+	# print "union: ", union_nodes, "; len = ", len(union_nodes)
 	indices = list(range(len(union_nodes)))
 	final_nodes = []
 	for i in range(rounds):
@@ -93,7 +93,7 @@ def aggregate_centrality(graph, num_seeds, ratio, overlap_ratio, rounds, out_fil
 	fid = open(out_filename, 'w')
 	for i in range(rounds):
 		candidates = pick(overlap, non_overlap,union, num_seeds, overlap_ratio=overlap_ratio)
-		for j in range(10):
+		for j in range(len(candidates)):
 			if (i == rounds-1) and (j == len(candidates)-1):
 				fid.write(candidates[j])
 			else: 
@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
 	cluster_flag = sys.argv[2] # do clustering or not
 
-	num_seeds = int(filename.split('.')[1]) + 2 # number of nodes we can select
+	num_seeds = int(filename.split('.')[1])# number of nodes we can select
 	
 	strategy_name = sys.argv[3] # use which strategy ("deg" / "clo" / "bet" / "aggr")
 	final_name = "_".join(filename.split('.')[:-1]) + "_" + strategy_name + ".txt" # output filename

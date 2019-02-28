@@ -45,9 +45,9 @@ def betweenness(graph, n):
     return nlargest_betweenness
 
 def aggregate(graph,n,pool_ratio):
-    cl = closeness(graph, pool_ratio*n)
-    dg = degree(graph, pool_ratio*n)
-    bt = betweenness(graph, pool_ratio*n)
+    cl = closeness(graph, int(pool_ratio*n))
+    dg = degree(graph, int(pool_ratio*n))
+    bt = betweenness(graph, int(pool_ratio*n))
     data = {}
     for item in cl:
         data[item] = data.get(item,0) +1
@@ -79,6 +79,8 @@ def pick(overlap,non_overlap, union, n, overlap_ratio = 0.5):
     num_missing = n - len(candidates)
     if num_missing > 0:
         candidates += random.sample(union - set(candidates), num_missing)
+    elif num_missing < 0:
+        candidates = candidates[:n]
     return candidates
 
 def get_largest_cluster(graph, num_clusters):
