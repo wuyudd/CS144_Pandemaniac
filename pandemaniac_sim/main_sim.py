@@ -69,10 +69,10 @@ def union(graph, num_seeds, ratio, rounds):
 	dg = degree(graph, int(ratio * num_seeds))
 	bt = betweenness(graph, int(ratio * num_seeds))
 	union_nodes = list(set(cl + dg + bt))
-	print "close: ", cl
-	print "degree: ", dg
-	print "betweenness: ", bt
-	print "union: ", union_nodes, "; len = ", len(union_nodes)
+	# print "close: ", cl
+	# print "degree: ", dg
+	# print "betweenness: ", bt
+	# print "union: ", union_nodes, "; len = ", len(union_nodes)
 	indices = list(range(len(union_nodes)))
 	final_nodes = []
 	for i in range(rounds):
@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
 	# cluster_flag = sys.argv[2] # do clustering or not
 
-	# num_seeds = int(filename.split('.')[1]) + 2 # number of nodes we can select
+	num_seeds = int(filename.split('.')[1]) # number of nodes we can select
 	
 	# strategy_name = sys.argv[3] # use which strategy ("deg" / "clo" / "bet" / "aggr")
 	# final_name = "_".join(filename.split('.')[:-1]) + "_" + strategy_name + ".txt" # output filename
@@ -154,19 +154,39 @@ if __name__ == "__main__":
 	# atmost_nodes_num = int(sys.argv[6]) # at most atmost_nodes_num nodes can be in the final graph
 	
 	# ratio = float(sys.argv[7])
-
+	ratio = 1.5
+	overlap_ratio = 0.4
+	rounds = 1
 	G = read_graph(filename)
 	origin_graph = nx.Graph(G) # create the graph object
 	#select_strategy(strategy_name, origin_graph, cluster_flag, num_seeds, ratio, num_clusters, atmost_nodes_num, final_name) # get final result
 	
 	# for sim test
-	union_ta = union(origin_graph, 12, 1, 1)
-	union_mine = union(origin_graph, 10, 1, 1)
-	#deg = degree_only(origin_graph, 10, 1.5, 1)
-	#mine = closeness_only(origin_graph, 10, 1.5, 1)
+	num_groups = 10
+	strategies = ["deg", "clo", "bet", "aggr"]
 	strategy = {}
-	strategy["union_ta"] = union_ta
-	strategy["union_mine"] = union_mine
+
+	for i in range(num_groups):
+		rnd_int = random.randint(0, 3)
+		curr_strategy = strategies[rnd_int]
+		print "i start!, my strategy is ", curr_strategy
+		if curr_strategy == "deg":
+			final_nodes = degree_only(origin_graph, num_seeds, ratio, rounds)
+			strategy[curr_strategy] = final_nodes
+		elif curr_strategy == "clo":
+			final_nodes = closeness_only(origin_graph, num_seeds, ratio, rounds)
+			strategy[curr_strategy] = final_nodes
+		elif curr_strategy == "bet":
+			final_nodes = betweenness_only(origin_graph, num_seeds, ratio, rounds)
+			strategy[curr_strategy] = final_nodes
+		elif curr_strategy == "aggr":
+			overlap, non_overlap, union = aggregate(origin_graph, num_seeds, pool_ratio=ratio)
+			candidates = pick(overlap, non_overlap,union, num_seeds, overlap_ratio=overlap_ratio)
+			strategy[curr_strategy] = candidates
+		else:
+			print "no such strategy!!!"
+		print "i end! ", curr_strategy
+
 	#strategy["mine"] = mine
 	#strategy["degree"] = deg
 	result = sim.run(G, strategy)

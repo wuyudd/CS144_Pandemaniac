@@ -144,7 +144,7 @@ if __name__ == "__main__":
 
 	num_seeds = int(filename.split('.')[1])# number of nodes we can select
 	
-	strategy_name = sys.argv[3] # use which strategy ("deg" / "clo" / "bet" / "aggr")
+	strategy_name = sys.argv[3] # use which strategy ("deg" / "clo" / "bet" / "aggr" / "union")
 	final_name = "_".join(filename.split('.')[:-1]) + "_" + strategy_name + ".txt" # output filename
 	
 	overlap_ratio = float(sys.argv[4]) # choose what ratio of overlapped (intersected of three centrality) nodes

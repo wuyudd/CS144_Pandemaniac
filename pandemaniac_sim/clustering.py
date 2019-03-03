@@ -57,7 +57,7 @@ def spetral_clustering(A_emb, nodes_largest_graph, num_clusters, nodes_largest_m
 	# cluster_labels_of_nodes = spt_cluster.labels_
 	nodes_of_clusters = collections.defaultdict(list)
 
-	spt_cluster = cluster.SpectralClustering(n_clusters=num_clusters, affinity='nearest_neighbors', n_neighbors=3)
+	spt_cluster = cluster.SpectralClustering(n_clusters=num_clusters, affinity='nearest_neighbors')
 	cluster_labels_of_nodes = spt_cluster.fit_predict(A_emb) # return labels : ndarray, shape (n_samples,)
 	# print "****************** cluster label ******************"
 	# print cluster_labels_of_nodes
@@ -87,6 +87,14 @@ def output_subgraph(nodes_of_clusters, graph):
 			max_cluster = key
 	max_subgraph = graph.subgraph(nodes_of_clusters[max_cluster])
 	return max_subgraph, max_len
+
+def draw_every_subgraph(nodes_of_clusters, graph):
+	for key, value in nodes_of_clusters.items():
+		subgraph = graph.subgraph(nodes_of_clusters[key])
+		plt.figure()
+		pos=nx.spring_layout(subgraph, k = 0.15, iterations = 20, scale = 10)
+		nx.draw(subgraph,pos, with_labels = False, node_size = 0.1, width = 0.01)
+		plt.show()
 
 def plot(nodes_of_clusters, A_emb):
 	'''
