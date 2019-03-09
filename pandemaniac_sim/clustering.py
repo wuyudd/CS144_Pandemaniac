@@ -58,6 +58,7 @@ def spetral_clustering(A_emb, nodes_largest_graph, num_clusters, nodes_largest_m
 	nodes_of_clusters = collections.defaultdict(list)
 
 	spt_cluster = cluster.SpectralClustering(n_clusters=num_clusters, affinity='nearest_neighbors')
+	#spt_cluster = cluster.SpectralClustering(n_clusters=num_clusters, affinity='precomputed')
 	cluster_labels_of_nodes = spt_cluster.fit_predict(A_emb) # return labels : ndarray, shape (n_samples,)
 	# print "****************** cluster label ******************"
 	# print cluster_labels_of_nodes

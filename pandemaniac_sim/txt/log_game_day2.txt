@@ -1,0 +1,3 @@
+27.10.2.json  python main.py 27.10.2.json 1 aggr 0.3 2 3000 1.5 (one dense cluster + one bigger loose cluster)
+13.20.8.json  python main.py 13.20.8.json 0 aggr 0.5 2 3000 1.5 (one cluster)
+6.10.7.json   python main.py 6.10.7.json 1 aggr 0.5 2 3000 1.5 (two obvious clusters)

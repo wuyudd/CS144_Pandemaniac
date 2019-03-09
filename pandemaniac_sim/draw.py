@@ -22,6 +22,7 @@ if __name__ == "__main__":
 	adj_largest_mat, nodes_largest_graph = largest_subgraph_adj(origin_graph)
 	nodes_largest_map, nodes_largest_invmap = map_nodes(nodes_largest_graph)
 	A_d, A_emb = embedding_adj(adj_largest_mat)
+	#A_emb = adj_largest_mat
 	nodes_of_clusters = spetral_clustering(A_emb, nodes_largest_graph, num_clusters, nodes_largest_map, nodes_largest_invmap)
 	draw_every_subgraph(nodes_of_clusters, origin_graph)
 
