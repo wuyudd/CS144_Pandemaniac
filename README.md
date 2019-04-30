@@ -1,5 +1,7 @@
 # CS144_Pandemaniac
 
+// Created and Modified by Yu Wu.
+
 This is the MiniProject 2 of CS144, Caltech.
 
 Group Member: Wen Gu, Sha Sha, Yu Wu.
